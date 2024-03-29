@@ -10,6 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 	<link rel="shortcut icon" href="image/icon.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+		integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+		crossorigin="anonymous" />
 </head>
 
 <body>
@@ -124,14 +127,14 @@
 			</div>
 		</div>
 	</div>
-		<div id="inforow">
-			<div id="infol">
-				Quốc tịch
-			</div>
-			<div id="infor">
-				Việt Nam<!--edit -->
-			</div>
+	<div id="inforow">
+		<div id="infol">
+			Quốc tịch
 		</div>
+		<div id="infor">
+			Việt Nam<!--edit -->
+		</div>
+	</div>
 	</div>
 	<div class="bbb"></div>
 	<div id="mt">THÔNG TIN LIÊN HỆ</div>
@@ -242,7 +245,7 @@
 		</div>
 	</a>
 	<!--Twitter-->
-	<a onClick="alert('Mình không dùng !')" target="blank"><!--edit -->
+	<a onclick="showErrorToast();" target="blank"><!--edit -->
 		<div id="rowb">
 			<div id="row">
 				<div id="rowl">
@@ -268,7 +271,7 @@
 		</div>
 	</a>
 	<!--Spotify-->
-	<a onClick="alert('Mình không dùng !')" target="blank"><!--edit -->
+	<a onclick="showErrorToast();" target="blank"><!--edit -->
 		<div id="rowb">
 			<div id="row">
 				<div id="rowl">
@@ -281,7 +284,7 @@
 		</div>
 	</a>
 	<!--Whatsapp-->
-	<a onClick="alert('Mình không dùng !')" target="blank"><!--edit -->
+	<a onclick="showErrorToast();" target="blank"><!--edit -->
 		<div id="rowb">
 			<div id="row">
 				<div id="rowl">
@@ -306,18 +309,20 @@
 	</a>
 	<div class="bbb"></div>
 	<div id="mt">THÔNG TIN THANH TOÁN</div>
-	<div id="rowb">
-		<div id="row">
-			<div id="rowl">
-				<img src="image/BIDV.png">
-			</div>
-			<div id="rowr">
-				<div id="td">BIDV</div><!--edit -->
-				<div id="nb">HOANG LE NHAT MINH</div><!--edit -->
-				<a id="text2">51210000907111</a>
+	<a onclick="showSuccessToast();">
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/BIDV.png">
+				</div>
+				<div id="rowr">
+					<div id="td">BIDV</div><!--edit -->
+					<div id="nb">HOANG LE NHAT MINH</div><!--edit -->
+					<a id="number">51210000907111</a>
+				</div>
 			</div>
 		</div>
-	</div>
+	</a>
 	<a href="https://nhantien.momo.vn/0889968520" target="blank"><!--edit -->
 		<div id="row">
 			<div id="rowl">
@@ -339,6 +344,26 @@
 			<div id="nd">Bạn là độc nhất vô nhị!</div><!--edit -->
 		</div>
 	</div>
+	<div id="toast"></div>
+	<script>
+		function showSuccessToast() {
+			toastCopy({
+				title: "Thành công!",
+				message: "Sao chép thành công STK.",
+				type: "success",
+				duration: 3000
+			});
+		}
+
+		function showErrorToast() {
+			toast({
+				title: "Xin lỗi!",
+				message: "Mình không dùng cái này.",
+				type: "error",
+				duration: 3000
+			});
+		}
+	</script>
 </body>
 
 </html>
