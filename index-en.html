@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Hoàng Lê Nhật Minh - Card visit điện tử"><!--edit -->
+	<title>Hoàng Lê Nhật Minh - Card visit điện tử</title><!--edit -->
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+	<link rel="shortcut icon" href="image/icon.png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+
+<body>
+	<!-- Change Language -->
+	<form id="myForm">
+		<input id="checkbox_toggle" type="checkbox" class="check">
+		<div class="checkbox">
+			<label class="slide" for="checkbox_toggle">
+				<label class="toggle" for="checkbox_toggle"></label>
+				<label class="text" for="checkbox_toggle">Tiếng Việt</label>
+				<label class="text" for="checkbox_toggle">English</label>
+			</label>
+		</div>
+	</form>
+	<!-- Switch by checkbox -->
+	<script>
+		// check tick or untick
+		var savedCheckboxState = localStorage.getItem('myCheckboxState');
+		if (savedCheckboxState === 'checked') {
+			document.getElementById('checkbox_toggle').checked = true;
+		}
+		document.getElementById("myForm").addEventListener("change", function () {
+			var checkbox = document.getElementById("checkbox_toggle");
+			if (checkbox.checked) {
+				localStorage.setItem('myCheckboxState', 'checked');
+			} else {
+				localStorage.removeItem('myCheckboxState');
+			}
+		});
+		document.getElementById("myForm").addEventListener("change", function () {
+			var checkbox = document.getElementById("checkbox_toggle");
+			if (!checkbox.checked) {
+				setTimeout(function () {
+					window.location.href = "index.html"; // redirect to new URL
+				}, 500); // waite to change		
+			}
+		});
+	</script>
+
+	<p style="font-weight: bold; font-size: 30px; color: #ffcb3b; text-align: center;"><i
+			class="far fa-address-card"></i> E - CARD VISIT</p>
+
+
+	<div id="top">
+		<img id="myImg" src="image/avatar2024.png" alt="Hello!" style="width:100%;max-width:100px;">
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+			<img class="modal-content" id="img01">
+			<div id="caption"></div>
+			<script src="javascript/script.js"></script>
+		</div>
+		<div id="topl">
+			<div id="topr">
+				<div id="name">Hoàng Lê Nhật Minh</div><!--edit -->
+				<div>@ZanisMinhteps</div><!--edit -->
+				<div>
+					<form method="get" action="vcf/vcard.vcf">
+						<button class="btn" id="success">Save contact</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bbb"></div>
+	<div id="mt">PERSONAL INFORMATION</div>
+	<div id="info">
+		<div id="inforow">
+			<div id="infol">
+				Full name
+			</div>
+			<div id="infor">
+				Hoàng Lê Nhật Minh<!--edit -->
+			</div>
+		</div>
+	</div>
+	<div id="info">
+		<div id="inforow">
+			<div id="infol">
+				Birth day
+			</div>
+			<div id="infor">
+				10/12/2003<!--edit -->
+			</div>
+		</div>
+	</div>
+	<div id="info">
+		<div id="inforow">
+			<div id="infol">
+				Job
+			</div>
+			<div id="infor">
+				College student<!--edit -->
+			</div>
+		</div>
+	</div>
+	<div id="info">
+		<div id="inforow">
+			<div id="infol">
+				Live in
+			</div>
+			<div id="infor">
+				Đà Nẵng<!--edit -->
+			</div>
+		</div>
+	</div>
+	<div id="info">
+		<div id="inforow">
+			<div id="infol">
+				Home town
+			</div>
+			<div id="infor">
+				Nghệ An<!--edit -->
+			</div>
+		</div>
+	</div>
+		<div id="inforow">
+			<div id="infol">
+				Nationality
+			</div>
+			<div id="infor">
+				Vietnamese<!--edit -->
+			</div>
+		</div>
+	</div>
+	<div class="bbb"></div>
+	<div id="mt">CONTACT INFORMATION</div>
+	<!--Số điện thoại-->
+	<a href="tel:0889968520"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/phone.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Phone number</div>
+					<div id="nd">0889968520</div><!--edit -->
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Email-->
+	<a href="mailto:hoangminhfcb@gmail.com"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/email.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Email</div>
+					<div id="nd">hoangminhfcb@gmail.com</div><!--edit -->
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Zalo-->
+	<a href="https://zalo.me/0889968520" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/zalo.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Zalo</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<a href="https://m.me/Zanis.Minhteps" target="blank"><!--edit -->
+		<div id="row">
+			<div id="rowl">
+				<img src="image/Messenger.png">
+			</div>
+			<div id="rowr">
+				<div id="td">Messenger</div>
+			</div>
+		</div>
+	</a>
+	<div class="bbb"></div>
+	<div id="mt">SOCIAL NETWORK</div>
+	<!--Facebook-->
+	<a href="https://www.facebook.com/Zanis.Minhteps" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/Facebook.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Facebook</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<a href="https://www.youtube.com/channel/UCBmR7GvVqFdFIhQJEnxo00Q" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/Youtube.png">
+				</div>
+				<div id="rowr">
+					<div id="td">YouTube</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<a href="http://www.instagram.com/zanisminhteps" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/Instagram.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Instagram</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<a href="https://soundcloud.com/zanis-minhteps" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/Soundcloud.png">
+				</div>
+				<div id="rowr">
+					<div id="td">SoundCloud</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Twitter-->
+	<a href="/link Twitter của bạn/" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/tw.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Twitter</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Tiktok-->
+	<a href="/link Tiktok của bạn/" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/tt.png">
+				</div>
+				<div id="rowr">
+					<div id="td">TikTok</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Spotify-->
+	<a href="/link Spotify của bạn/" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/sp.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Spotify</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Whatsapp-->
+	<a href="/link WhatsApp của bạn/" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/wa.png">
+				</div>
+				<div id="rowr">
+					<div id="td">WhatsApp</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Telegram-->
+	<a href="/link Telegram của bạn/" target="blank"><!--edit -->
+		<div id="row">
+			<div id="rowl">
+				<img src="image/tg.png">
+			</div>
+			<div id="rowr">
+				<div id="td">Telegram</div>
+			</div>
+		</div>
+	</a>
+	<div class="bbb"></div>
+	<div id="mt">PAYMENT INFORMATION</div>
+	<div id="rowb">
+		<div id="row">
+			<div id="rowl">
+				<img src="image/BIDV.png">
+			</div>
+			<div id="rowr">
+				<div id="td">BIDV</div><!--edit -->
+				<div id="nb">HOANG LE NHAT MINH</div><!--edit -->
+				<a id="text2">51210000907111</a>
+			</div>
+		</div>
+	</div>
+	<a href="https://nhantien.momo.vn/0889968520" target="blank"><!--edit -->
+		<div id="row">
+			<div id="rowl">
+				<img src="image/momo.png">
+			</div>
+			<div id="rowr">
+				<div id="td">Momo</div>
+			</div>
+		</div>
+	</a>
+	<div class="bbb"></div>
+	<!--Ghi chú riêng-->
+	<div id="row">
+		<div id="rowl">
+			<img src="image/note.png">
+		</div>
+		<div id="rowr">
+			<div id="td">Hello</div><!--edit -->
+			<div id="nd">You are unique!</div><!--edit -->
+		</div>
+	</div>
+</body>
+
+</html>
