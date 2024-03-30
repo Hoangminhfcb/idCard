@@ -30,6 +30,7 @@
 	<!-- Switch by checkbox -->
 	<script>
 		// check tick or untick
+		localStorage.removeItem('myCheckboxState');
 		var savedCheckboxState = localStorage.getItem('myCheckboxState');
 		if (savedCheckboxState === 'checked') {
 			document.getElementById('checkbox_toggle').checked = true;
