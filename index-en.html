@@ -50,6 +50,11 @@
 				}, 500); // waite to change		
 			}
 		});
+		window.addEventListener('pageshow', function (event) {
+			if (event.persisted) {
+				window.location.reload();
+			}
+		});
 	</script>
 
 	<p style="font-weight: bold; font-size: 30px; color: #ffcb3b; text-align: center;"><i
@@ -201,6 +206,19 @@
 				</div>
 				<div id="rowr">
 					<div id="td">Facebook</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Locket-->
+	<a href="https://locket.camera/links/DMhTfSF6RBwUbxoE9" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/locket.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Locket</div>
 				</div>
 			</div>
 		</div>

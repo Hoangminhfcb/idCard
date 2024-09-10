@@ -30,7 +30,6 @@
 	<!-- Switch by checkbox -->
 	<script>
 		// check tick or untick
-		localStorage.removeItem('myCheckboxState');
 		var savedCheckboxState = localStorage.getItem('myCheckboxState');
 		if (savedCheckboxState === 'checked') {
 			document.getElementById('checkbox_toggle').checked = true;
@@ -49,6 +48,11 @@
 				setTimeout(function () {
 					window.location.href = "index-en.html"; // redirect to new URL
 				}, 500); // waite to change		
+			}
+		});
+		window.addEventListener('pageshow', function (event) {
+			if (event.persisted) {
+				window.location.reload();
 			}
 		});
 	</script>
@@ -202,6 +206,19 @@
 				</div>
 				<div id="rowr">
 					<div id="td">Facebook</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--Locket-->
+	<a href="https://locket.camera/links/DMhTfSF6RBwUbxoE9" target="blank"><!--edit -->
+		<div id="rowb">
+			<div id="row">
+				<div id="rowl">
+					<img src="image/locket.png">
+				</div>
+				<div id="rowr">
+					<div id="td">Locket</div>
 				</div>
 			</div>
 		</div>
