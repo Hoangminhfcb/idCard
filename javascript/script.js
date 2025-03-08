@@ -5,17 +5,14 @@ var form = document.getElementById("myForm");
 var img = document.getElementById("myImg");
 var modalImg = document.getElementById("img01");
 var captionText = document.getElementById("caption");
-img.onclick = function(){
+img.onclick = function () {
   modal.style.display = "block";
   modalImg.src = this.src;
   captionText.innerHTML = this.alt;
-  form.style.display = "none";
 }
-modal.onclick = function() { 
+modal.onclick = function () {
   modal.style.display = "none";
-  form.style.display = "block";
 }
-
 
 // ToastCopy function
 function toastCopy({ title = "", message = "", type = "info", duration = 3000 }) {
