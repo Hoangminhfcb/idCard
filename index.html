@@ -7,59 +7,11 @@
 	<meta name="description" content="Hoàng Lê Nhật Minh - Card visit điện tử"><!--edit -->
 	<title>Hoàng Lê Nhật Minh - Card visit điện tử</title><!--edit -->
 	<link rel="stylesheet" type="text/css" href="css/index.css">
-	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 	<link rel="shortcut icon" href="image/icon.png">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-		integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-		crossorigin="anonymous" />
 </head>
-
 <body>
-	<!-- Change Language -->
-	<form id="myForm">
-		<input id="checkbox_toggle" type="checkbox" class="check">
-		<div class="checkbox">
-			<label class="slide" for="checkbox_toggle">
-				<label class="toggle" for="checkbox_toggle"></label>
-				<label class="text" for="checkbox_toggle">Tiếng Việt</label>
-				<label class="text" for="checkbox_toggle">English</label>
-			</label>
-		</div>
-	</form>
-	<!-- Switch by checkbox -->
-	<script>
-		// check tick or untick
-		var savedCheckboxState = localStorage.getItem('myCheckboxState');
-		if (savedCheckboxState === 'checked') {
-			document.getElementById('checkbox_toggle').checked = true;
-		}
-		document.getElementById("myForm").addEventListener("change", function () {
-			var checkbox = document.getElementById("checkbox_toggle");
-			if (checkbox.checked) {
-				localStorage.setItem('myCheckboxState', 'checked');
-			} else {
-				localStorage.removeItem('myCheckboxState');
-			}
-		});
-		document.getElementById("myForm").addEventListener("change", function () {
-			var checkbox = document.getElementById("checkbox_toggle");
-			if (checkbox.checked) {
-				setTimeout(function () {
-					window.location.href = "index-en.html"; // redirect to new URL
-				}, 500); // waite to change		
-			}
-		});
-		window.addEventListener('pageshow', function (event) {
-			if (event.persisted) {
-				window.location.reload();
-			}
-		});
-	</script>
-
 	<p style="font-weight: bold; font-size: 30px; color: #ffcb3b; text-align: center;"><i
 			class="far fa-address-card"></i> CARD VISIT ĐIỆN TỬ</p>
-
 	<div id="top">
 		<img id="myImg" src="image/avatar2024.png" alt="Xin Chào!" style="width:100%;max-width:100px;">
 		<!-- The Modal -->
