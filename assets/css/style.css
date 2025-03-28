@@ -341,7 +341,7 @@ a {
     }
 
     .infol {
-        font-size: 2vw;
+        font-size: 2.5vw;
         text-align: left;
         width: 100%;
         margin: 0;
@@ -350,6 +350,7 @@ a {
     .infor {
         width: 100%;
         margin: 0;
+        font-size: 4.5vw;
     }
 
     #habit-info {
