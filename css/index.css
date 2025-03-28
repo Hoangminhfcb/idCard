@@ -16,7 +16,7 @@ body {
   width: 100%;
   font-family: BeVietnam;
   color: white;
-  background-image: url(bg-small.png);
+  background-image: url(bg-small.webp);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -175,7 +175,7 @@ body {
     width: 100%;
     font-family: BeVietnam;
     color: white;
-    background-image: url(bg-big.png);
+    background-image: url(bg-big.webp);
     background-color: rgba(0, 0, 0, 0.2);
     background-blend-mode: multiply;
     background-repeat: no-repeat;
