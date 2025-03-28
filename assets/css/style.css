@@ -306,13 +306,13 @@ a {
 
 @media (min-aspect-ratio: 1/1) {
     .select {
-        margin-top: 20vw;
+        margin-top: 30vw;
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
     .select {
-        margin-top: 20vh;
+        margin-top: 30vh;
     }
 }
 
@@ -369,23 +369,39 @@ a {
     }
 
     #facebook {
-        left: 40%;
-    }
-
-    #zalo {
         left: 50%;
     }
 
-    #locket {
+    #zalo {
         left: 60%;
     }
 
-    #github {
+    #locket {
         left: 70%;
+    }
+
+    #github {
+        left: 80%;
+    }
+
+    .select {
+        height: 1%;
+        width: 1%;
+    }
+
+    .select .contact {
+        height: 10%;
+        width: 40%;
+    }
+
+    .select .contactl {
+        height: 15%;
     }
 
     .select .contactl img {
         height: 6vw;
         width: 6vw;
     }
+
+
 }
