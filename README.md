@@ -16,3 +16,5 @@ Cuối cùng là v3. Đến thời điểm viết bài này thì nó chưa hoàn
 Các bạn có thể xem demo tại đây
 https://hoangminhfcb.github.io/idCard/
 
+Note: Mình thiết kế chủ yếu để share qua điện thoại nên xem demo các bạn mở về chế độ mobile để xem nhé.
+
