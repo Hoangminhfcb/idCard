@@ -1,4 +1,4 @@
-# 🪪 Danh Thiếp Điện Tử – Hoàng Minh
+# 🪪 Danh Thiếp Điện Tử – Hoàng Lê Nhật Minh
 
 Dự án **Danh thiếp điện tử** là sản phẩm cá nhân mình tự học và phát triển, xuất phát từ những ngày đầu mới biết đến HTML, CSS và JavaScript. Với sự hỗ trợ từ ChatGPT và các nguồn tài liệu mở, mình đã xây dựng và nâng cấp qua từng phiên bản, và nay đã đến **phiên bản v3**.
 
