@@ -1,20 +1,75 @@
-Với những kiến thức cơ bản về html, css và js. Kết hợp với chatGPT và nhiều nguồn code khác mình đã tổng hợp lại và tự làm cho mình một Danh thiếp điện tử.
-Dự án này mình bắt đầu từ khá lâu. lúc mình còn chưa biết gì về html css. Chỉ thấy họ làm và copy rồi sửa lại tên mình thôi. không custom được như ý mình.
-Từ truóc khi biết metap của Dũng Lại lập trình mình đã biết đến NFC và dùng để chia sẻ facebook của mình. Đến khi có người làm thì mình bỏ cho đến bây giờ là 2025. 
-Trước đó mình có làm v1, v2 nhưng chưa biết gitHub nên cũng chỉ lưu trong máy. Bấy giờ mình muốn chia sẻ để mọi người có thể có cách nhìn đơn giản để tự làm nếu muốn.
+# 🪪 Danh Thiếp Điện Tử – Hoàng Minh
 
-File readme này được viết khi mình up bản v3 vậy nên mình sẽ chia sẽ cách mình làm trước đó và sẽ có demo cho các bạn.
+Dự án **Danh thiếp điện tử** là sản phẩm cá nhân mình tự học và phát triển, xuất phát từ những ngày đầu mới biết đến HTML, CSS và JavaScript. Với sự hỗ trợ từ ChatGPT và các nguồn tài liệu mở, mình đã xây dựng và nâng cấp qua từng phiên bản, và nay đã đến **phiên bản v3**.
 
-Đầu tiên là bản v1 mình copy của người ta, sửa lại và host bằng glitch.
-https://grape-pinto-mailman.glitch.me/
-Đây là bản v1 sơ khai. chưa có gì nhiều. Tuy nhiên mình vẫn đã làm được cái hiển thị ảnh to hơn khi nhấn vào.
+---
 
-Tiếp theo là v2. Lúc này mình biết đến git nên mình dùng githubpage bản v2 cũng như bản v1 tuy nhiên mình có thêm toast message thay vì alert.
-bản này không có demo vì github page lấy bản mới nhất để deploy. Các bạn có thể xem trong nhánh cũ của mình.
+## 📜 Giới thiệu
 
-Cuối cùng là v3. Đến thời điểm viết bài này thì nó chưa hoàn thành nhưng vẫn giữ các chức năng cơ bản như v1, v2. 
-Các bạn có thể xem demo tại đây
-https://hoangminhfcb.github.io/idCard/
+- Ban đầu (v1), mình chỉ biết copy code từ người khác, chỉnh sửa lại tên và ảnh cá nhân, không biết custom.
+- Mình từng biết đến **NFC** và từng dùng để chia sẻ Facebook từ lâu, trước cả khi biết đến Metap của Dũng Lại Lập Trình.
+- Đến 2025, mình quyết định làm lại bản v3 để chia sẻ với mọi người – vừa đơn giản, vừa dễ nhân rộng.
 
-Note: Mình thiết kế chủ yếu để share qua điện thoại nên xem demo các bạn mở về chế độ mobile để xem nhé.
+---
 
+## 🧾 Các phiên bản
+
+### 🔹 V1 – Bản sơ khai
+
+- Copy và chỉnh sửa từ dự án mẫu.
+- Có hiệu ứng click ảnh để xem lớn hơn.
+- Host trên Glitch.
+
+🔗 Demo: [https://grape-pinto-mailman.glitch.me/](https://grape-pinto-mailman.glitch.me/)
+
+---
+
+### 🔹 V2 – Bản cải tiến nhẹ
+
+- Biết dùng GitHub và dùng GitHub Pages để deploy.
+- Thay alert bằng toast message.
+- Không có demo do GitHub Pages chỉ deploy bản mới nhất. Bạn có thể xem lại code trong các nhánh cũ.
+
+---
+
+### 🔹 V3 – Phiên bản hiện tại (2025)
+
+- Viết lại sạch sẽ hơn.
+- Tối ưu cho trải nghiệm trên điện thoại.
+- Giữ lại các tính năng cơ bản từ V1 và V2.
+
+🔗 Demo: [https://hoangminhfcb.github.io/idCard/](https://hoangminhfcb.github.io/idCard/)
+    Hoặc: [https://info.zanis.id.vn](https://info.zanis.id.vn)
+
+> 📱 **Lưu ý:** Demo được thiết kế cho điện thoại. Vui lòng chuyển trình duyệt về chế độ di động để xem đúng giao diện.
+
+---
+
+## 🛠 Công nghệ sử dụng
+
+- HTML5 / CSS3 / JavaScript (thuần)
+- Toast message UI đơn giản
+- GitHub Pages (host static)
+- Docker (build & preview local)
+
+---
+
+## 🐳 Dùng Docker để build và preview
+
+**Yêu cầu:** Cài đặt sẵn Docker
+
+### 🔧 Build & Run
+```bash
+docker build -t idcard-web .
+docker run -d -p 8080:80 idcard-web
+```
+
+Truy cập demo tại: `http://localhost:8080`
+
+---
+
+## 💬 Lời kết
+
+Mình viết README này khi đang phát hành bản V3, như một cách chia sẻ lại hành trình học code từ con số 0. Mong rằng dự án nhỏ này có thể truyền cảm hứng cho bạn nào đang muốn tự làm một chiếc danh thiếp điện tử đơn giản.
+
+Nếu bạn cần giúp đỡ hoặc hướng dẫn tạo một chiếc **ID Card Web**, cứ thoải mái mở issue hoặc liên hệ mình nhé! 😄
