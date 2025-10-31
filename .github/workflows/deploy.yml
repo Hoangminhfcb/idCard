@@ -25,13 +25,13 @@ jobs:
         run: |
           echo "=== Starting authenticated tunnel ==="
 
-          nohup cloudflared access tcp ssh.zanis.id.vn:22 \
+          nohup cloudflared access tcp \
+          --hostname ssh.zanis.id.vn \         # hostname trên Cloudflare Access
+          --destination 127.0.0.1:22 \        # địa chỉ SSH server của bạn
           --service-token-id ${{ secrets.CF_SERVICE_TOKEN_ID }} \
           --service-token-secret ${{ secrets.CF_SERVICE_TOKEN_SECRET }} \
-          --local-addr 127.0.0.1:2222 \
+          --local-addr 127.0.0.1:2222 \       # port local bind
           > cloudflared.log 2>&1 &
-
-
 
           TUNNEL_PID=$!
           echo "Tunnel PID: $TUNNEL_PID"
