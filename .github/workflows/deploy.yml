@@ -45,16 +45,16 @@ jobs:
       # 5️⃣ Mở Cloudflare Tunnel (background) với service token
       - name: Start Cloudflare Tunnel (background)
         env:
-          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_SERVICE_TOKEN_ID }}
-          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
+          CF_SERVICE_TOKEN_ID: ${{ secrets.CF_SERVICE_TOKEN_ID }}
+          CF_SERVICE_TOKEN_SECRET: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
         run: |
-          echo "=== Starting authenticated tunnel ==="
+          echo "=== Starting authenticated tunnel with Service Token ==="
 
-          # Export credentials
-          export TUNNEL_SERVICE_TOKEN_ID="${TUNNEL_SERVICE_TOKEN_ID}"
-          export TUNNEL_SERVICE_TOKEN_SECRET="${TUNNEL_SERVICE_TOKEN_SECRET}"
+          # Export biến theo đúng tên mà cloudflared hiểu
+          export CLOUDFLARE_ACCESS_CLIENT_ID="${CF_SERVICE_TOKEN_ID}"
+          export CLOUDFLARE_ACCESS_CLIENT_SECRET="${CF_SERVICE_TOKEN_SECRET}"
 
-          # Start tunnel trên port 2222 (tránh conflict với SSH local)
+          # Mở tunnel trên port 2222
           nohup cloudflared access tcp \
             --hostname ssh.zanis.id.vn \
             --url localhost:2222 \
@@ -64,17 +64,17 @@ jobs:
           sleep 15
 
           echo "--- Tunnel logs ---"
-          cat cloudflared.log | head -30
+          head -30 cloudflared.log || true
 
-          # Check for auth errors
+          # Kiểm tra có lỗi xác thực không
           if grep -q "browser window" cloudflared.log; then
-            echo "ERROR: Service token not working!"
+            echo "❌ ERROR: Cloudflare service token not applied properly!"
             cat cloudflared.log
             exit 1
           fi
 
           echo "--- Port check ---"
-          ss -ltn | grep 2222 || echo "WARNING: Port 2222 not listening!"
+          ss -ltn | grep 2222 || echo "⚠️ WARNING: Port 2222 not listening!"
 
       # 6️⃣ Deploy qua SSH (via Cloudflare Tunnel)
       - name: Deploy over SSH (via Tunnel)
