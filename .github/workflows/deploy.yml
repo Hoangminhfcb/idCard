@@ -41,7 +41,7 @@ jobs:
       #5️⃣ Mở Cloudflare Tunnel (background)
       - name: Start Cloudflare Tunnel (background)
         run: |
-          nohup cloudflared access tcp --hostname ssh.zanis.id.vn --url localhost:2222 &
+          nohup cloudflared access tcp --hostname ssh.zanis.id.vn --url localhost:22 &
           sleep 5
 
       # 6️⃣ Add SSH key
@@ -50,19 +50,19 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p 2222 127.0.0.1 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 22 127.0.0.1 >> ~/.ssh/known_hosts
 
       # 7️⃣ Deploy qua SSH
       - name: Deploy over SSH
         run: |
-          ssh -i ~/.ssh/id_rsa -p 2222 user@127.0.0.1 <<EOF
+          ssh -i ~/.ssh/id_rsa -p 22 zanis@127.0.0.1 <<EOF
           set -e
-          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myapp
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
           IMAGE_TAG=${{ env.IMAGE_TAG }}
 
           echo "Dừng container cũ (nếu có)..."
-          docker stop myapp || true
-          docker rm myapp || true
+          docker stop e-card || true
+          docker rm e-card || true
 
           echo "Xóa image cũ..."
           docker image prune -af
@@ -72,7 +72,7 @@ jobs:
 
           echo "Chạy container mới..."
           docker run -d \
-            --name myapp \
+            --name e-card \
             -p 80:8080 \
             --restart unless-stopped \
             \$IMAGE_NAME:\$IMAGE_TAG
