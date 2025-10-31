@@ -26,12 +26,10 @@ jobs:
           echo "=== Starting authenticated tunnel ==="
 
           nohup cloudflared access tcp \
-          --hostname ssh.zanis.id.vn \
-          --destination 192.168.23.197:22 \
-          --service-token-id ${{ secrets.CF_SERVICE_TOKEN_ID }} \
-          --service-token-secret ${{ secrets.CF_SERVICE_TOKEN_SECRET }} \
-          --local-addr 127.0.0.1:2222 \
-          > cloudflared.log 2>&1 &
+            --hostname ssh.zanis.id.vn \
+            --url localhost:2222 \
+            > cloudflared.log 2>&1 &
+
 
           TUNNEL_PID=$!
           echo "Tunnel PID: $TUNNEL_PID"
