@@ -1,0 +1,78 @@
+name: Deploy via Cloudflare Tunnel
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Lấy code
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 2️⃣ Login Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3️⃣ Build & Push image
+      - name: Build and Push Docker image
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myapp
+          TAG=$(date +%Y%m%d%H%M%S)
+          docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:$TAG
+          docker push $IMAGE_NAME:latest
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
+
+      # 4️⃣ Cài cloudflared
+      - name: Install cloudflared
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y cloudflared
+
+      # 5️⃣ Mở Cloudflare Tunnel (background)
+      - name: Start Cloudflare Tunnel (background)
+        run: |
+          nohup cloudflared access tcp --hostname ssh.zanis.id.vn --url localhost:2222 &
+          sleep 5
+
+      # 6️⃣ Add SSH key
+      - name: Add SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 2222 127.0.0.1 >> ~/.ssh/known_hosts
+
+      # 7️⃣ Deploy qua SSH
+      - name: Deploy over SSH
+        run: |
+          ssh -i ~/.ssh/id_rsa -p 2222 user@127.0.0.1 <<EOF
+          set -e
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myapp
+          IMAGE_TAG=${{ env.IMAGE_TAG }}
+
+          echo "Dừng container cũ (nếu có)..."
+          docker stop myapp || true
+          docker rm myapp || true
+
+          echo "Xóa image cũ..."
+          docker image prune -af
+
+          echo "Pull image mới..."
+          docker pull \$IMAGE_NAME:\$IMAGE_TAG
+
+          echo "Chạy container mới..."
+          docker run -d \
+            --name myapp \
+            -p 80:8080 \
+            --restart unless-stopped \
+            \$IMAGE_NAME:\$IMAGE_TAG
+          EOF
