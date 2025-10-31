@@ -53,9 +53,12 @@ jobs:
           ssh-keyscan -p 22 127.0.0.1 >> ~/.ssh/known_hosts
 
       # 7️⃣ Deploy qua SSH
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
       - name: Deploy over SSH
         run: |
-          ssh -i ~/.ssh/id_rsa -p 22 zanis@127.0.0.1 <<EOF
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -p 22 zanis@127.0.0.1 <<'EOF'
           set -e
           IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
           IMAGE_TAG=${{ env.IMAGE_TAG }}
@@ -68,12 +71,12 @@ jobs:
           docker image prune -af
 
           echo "Pull image mới..."
-          docker pull \$IMAGE_NAME:\$IMAGE_TAG
+          docker pull $IMAGE_NAME:$IMAGE_TAG
 
           echo "Chạy container mới..."
           docker run -d \
             --name e-card \
             -p 80:8080 \
             --restart unless-stopped \
-            \$IMAGE_NAME:\$IMAGE_TAG
+            $IMAGE_NAME:$IMAGE_TAG
           EOF
