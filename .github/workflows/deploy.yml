@@ -23,48 +23,22 @@ jobs:
       # 2️⃣ Start Cloudflare Tunnel (background)
       - name: Start Cloudflare Tunnel (background)
         run: |
-          echo "=== Starting authenticated tunnel ==="
+          echo "=== Start headless cloudflared access tcp ==="
 
           nohup cloudflared access tcp \
             --hostname ssh.zanis.id.vn \
-            --url localhost:2222 \
+            --destination 192.168.23.197:22 \
+            --url 127.0.0.1:2222 \
+            --service-token-id "${{ secrets.CF_SERVICE_TOKEN_ID }}" \
+            --service-token-secret "${{ secrets.CF_SERVICE_TOKEN_SECRET }}" \
             > cloudflared.log 2>&1 &
 
+          sleep 5
+          echo "=== cloudflared logs (tail) ==="
+          tail -n 50 cloudflared.log || true
 
-          TUNNEL_PID=$!
-          echo "Tunnel PID: $TUNNEL_PID"
-
-          echo "Waiting for tunnel to establish..."
-          sleep 15
-
-          # wait short time and stream logs until the 'browser' URL line appears or timeout
-          SECONDS_WAIT=60
-          echo "Waiting up to ${SECONDS_WAIT}s for interactive URL (if any)..."
-
-          found=0
-          for i in $(seq 1 $SECONDS_WAIT); do
-            if grep -q "A browser window should have opened" cloudflared.log 2>/dev/null; then
-              echo ">>> Interactive URL detected at $(date). Dumping log head:"
-              # show last 100 lines so Actions log contains the URL
-              tail -n 100 cloudflared.log
-              found=1
-              break
-            fi
-            sleep 1
-          done
-
-          if [ $found -eq 0 ]; then
-            echo "No interactive URL found within ${SECONDS_WAIT}s (maybe running headless with service token)."
-            echo "Partial log:"
-            tail -n 50 cloudflared.log || true
-          fi
-
-          # Optionally keep streaming logs in background so next steps can still read them manually if needed
-          # (background tail won't block the step)
-          tail -f cloudflared.log &
-
-          # show listening ports quickly
-          ss -ltn | grep -E '127\.0\.0\.1:|:2222' || ss -ltn || true
+          echo "=== check listening ==="
+          ss -ltn | grep 127.0.0.1:2222 || echo "127.0.0.1:2222 not listening yet"
 
       # 3️⃣ SSH qua tunnel
       - name: SSH to your server
