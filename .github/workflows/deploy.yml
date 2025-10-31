@@ -58,25 +58,29 @@ jobs:
 
       - name: Deploy over SSH
         run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -p 22 zanis@127.0.0.1 <<'EOF'
-          set -e
-          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
-          IMAGE_TAG=${{ env.IMAGE_TAG }}
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            -p 22 \
+            zanis@ssh.zanis.id.vn << 'EOF'
+            set -e
+            IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
+            IMAGE_TAG=${{ env.IMAGE_TAG }}
 
-          echo "Dừng container cũ (nếu có)..."
-          docker stop e-card || true
-          docker rm e-card || true
+            echo "Dừng container cũ (nếu có)..."
+            docker stop e-card || true
+            docker rm e-card || true
 
-          echo "Xóa image cũ..."
-          docker image prune -af
+            echo "Xóa image cũ..."
+            docker image prune -af
 
-          echo "Pull image mới..."
-          docker pull $IMAGE_NAME:$IMAGE_TAG
+            echo "Pull image mới..."
+            docker pull $IMAGE_NAME:$IMAGE_TAG
 
-          echo "Chạy container mới..."
-          docker run -d \
-            --name e-card \
-            -p 80:8080 \
-            --restart unless-stopped \
-            $IMAGE_NAME:$IMAGE_TAG
+            echo "Chạy container mới..."
+            docker run -d \
+              --name e-card \
+              -p 80:8080 \
+              --restart unless-stopped \
+              $IMAGE_NAME:$IMAGE_TAG
           EOF
