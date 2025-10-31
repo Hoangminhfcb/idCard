@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Cài cloudflared
       - name: Install cloudflared
         run: |
           sudo apt-get update -y
@@ -20,14 +19,11 @@ jobs:
           sudo chmod +x /usr/local/bin/cloudflared
           cloudflared --version
 
-      # 2️⃣ Start Cloudflare Tunnel (background)
       - name: Start Cloudflare Tunnel (background)
         run: |
           echo "=== Start headless cloudflared access tcp ==="
-
           nohup cloudflared access tcp \
             --hostname ssh.zanis.id.vn \
-            --destination 192.168.23.197:22 \
             --url 127.0.0.1:2222 \
             --service-token-id "${{ secrets.CF_SERVICE_TOKEN_ID }}" \
             --service-token-secret "${{ secrets.CF_SERVICE_TOKEN_SECRET }}" \
@@ -36,18 +32,13 @@ jobs:
           sleep 5
           echo "=== cloudflared logs (tail) ==="
           tail -n 50 cloudflared.log || true
-
           echo "=== check listening ==="
           ss -ltn | grep 127.0.0.1:2222 || echo "127.0.0.1:2222 not listening yet"
 
-      # 3️⃣ SSH qua tunnel
       - name: SSH to your server
         env:
           SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
-          echo "=== Checking tunnel before SSH ==="
-          cat cloudflared.log
-
           echo "=== SSH via tunnel ==="
           sshpass -e ssh -vvv \
             -o ConnectTimeout=30 \
@@ -59,7 +50,6 @@ jobs:
             ${{ secrets.SSH_USER }}@127.0.0.1 \
             "hostname && echo 'SUCCESS!'"
 
-      # 4️⃣ Hiện log nếu lỗi
       - name: Show logs on failure
         if: failure()
         run: |
