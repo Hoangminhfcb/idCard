@@ -22,19 +22,19 @@ jobs:
 
       # 2️⃣ Start Cloudflare Tunnel (background)
       - name: Start Cloudflare Tunnel (background)
-        env:
-          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_SERVICE_TOKEN_ID }}
-          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
         run: |
           echo "=== Starting authenticated tunnel ==="
 
-          export TUNNEL_SERVICE_TOKEN_ID="${TUNNEL_SERVICE_TOKEN_ID}"
-          export TUNNEL_SERVICE_TOKEN_SECRET="${TUNNEL_SERVICE_TOKEN_SECRET}"
+          export CLOUDFLARE_ACCESS_CLIENT_ID="${{ secrets.CF_SERVICE_TOKEN_ID }}"
+          export CLOUDFLARE_ACCESS_CLIENT_SECRET="${{ secrets.CF_SERVICE_TOKEN_SECRET }}"
 
           nohup cloudflared access tcp \
             --hostname ssh.zanis.id.vn \
             --url localhost:2222 \
+            --service-token-id ${{ secrets.CF_SERVICE_TOKEN_ID }} \
+            --service-token-secret ${{ secrets.CF_SERVICE_TOKEN_SECRET }} \
             > cloudflared.log 2>&1 &
+
 
           TUNNEL_PID=$!
           echo "Tunnel PID: $TUNNEL_PID"
