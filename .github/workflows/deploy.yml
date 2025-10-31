@@ -11,6 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Cài cloudflared
+      - name: Install cloudflared
+        run: |
+          sudo apt-get update -y
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          sudo mv cloudflared /usr/local/bin/cloudflared
+          sudo chmod +x /usr/local/bin/cloudflared
+          cloudflared --version
+
+      # 2️⃣ Start Cloudflare Tunnel (background)
       - name: Start Cloudflare Tunnel (background)
         env:
           TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_SERVICE_TOKEN_ID }}
@@ -36,11 +46,12 @@ jobs:
           ps aux | grep cloudflared | grep -v grep || echo "Tunnel process not found!"
 
           echo "--- Tunnel logs ---"
-          cat cloudflared.log
+          cat cloudflared.log | tail -n 30
 
           echo "--- Checking port ---"
           ss -ltn | grep 2222 || echo "WARNING: Port 2222 not listening!"
 
+      # 3️⃣ SSH qua tunnel
       - name: SSH to your server
         env:
           SSHPASS: ${{ secrets.SSH_PASSWORD }}
@@ -59,12 +70,12 @@ jobs:
             ${{ secrets.SSH_USER }}@127.0.0.1 \
             "hostname && echo 'SUCCESS!'"
 
+      # 4️⃣ Hiện log nếu lỗi
       - name: Show logs on failure
         if: failure()
         run: |
           echo "=== FULL CLOUDFLARED LOGS ==="
-          cat cloudflared.log
+          cat cloudflared.log || echo "No cloudflared log found"
           echo ""
           echo "=== NETWORK STATUS ==="
           ss -ltn
-          netstat -tuln | grep 2222 || echo "No process on 2222"
