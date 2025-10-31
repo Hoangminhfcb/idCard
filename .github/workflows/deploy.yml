@@ -56,13 +56,13 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      - name: Deploy over SSH
+      - name: Deploy over SSH (using password)
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             -p 22 \
-            zanis@ssh.zanis.id.vn << 'EOF'
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
             IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
             IMAGE_TAG=${{ env.IMAGE_TAG }}
