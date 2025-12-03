@@ -18,10 +18,16 @@
 <body>
     <canvas id="canvas"></canvas>
     <section>
-        <div id="qrcode">
+        <div id="qrcode" class="qr-box">
             <div id="overlay-qrcode"></div>
-            <img id="qrcode-img" src="assets/img/qrcode.jpg" alt="">
-            <button id="copy-number" class="glow-on-hover">Copy</button>
+
+            <div class="qr-card">
+                <img id="qrcode-img" src="assets/img/BIDV_1764119721130.jpg" alt="QR Code">
+
+                <button id="copy-number" onclick="copyNumber()" class="qr-copy-btn glow-on-hover">
+                    Sao chép số TK
+                </button>
+            </div>
         </div>
         <div class="horizontal-scrolling-items">
             <div class="horizontal-scrolling-items__inner">
