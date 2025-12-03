@@ -63,7 +63,8 @@ section {
     top: 0;
     position: sticky;
     background: rgba(19, 212, 212, 0.5);
-    z-index: 1000;
+    z-index: 20;
+    margin-bottom: 5%;
 }
 
 .horizontal-scrolling-items__item {
@@ -102,6 +103,78 @@ section {
     cursor: pointer;
     position: relative;
     z-index: 5;
+    animation: zoomOut 1s ease-in-out forwards;
+}
+
+#avatar.show {
+    top: 0;
+    left: 0;
+    position: absolute;
+    max-width: 100%;
+    height: 100vw;
+    max-height: 100vh;
+    z-index: 30;
+    animation: zoomIn 1s ease-in-out forwards;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#overlay-qrcode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+#overlay-qrcode.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomOut {
+    from {
+        transform: scale(3);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 #topr {
@@ -289,6 +362,92 @@ a {
     font-size: 5vw;
 }
 
+.qr-box {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding-top: 10vh;
+    display: none;
+    justify-content: center;
+    z-index: 50;
+}
+
+.qr-box.show {
+    display: flex;
+}
+
+/* Card container */
+.qr-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: qrFadeIn 0.35s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 60;
+}
+
+/* QR code image */
+.qr-card img {
+    width: 70vw;
+    max-width: 300px;
+    border-radius: 16px;
+    border: 6px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    animation: qrPop 0.4s ease;
+}
+
+/* Copy button */
+.qr-copy-btn {
+    margin-top: 18px;
+    width: 70vw;
+    max-width: 300px;
+    padding: 12px 0;
+    font-size: 4vw;
+    border-radius: 12px;
+    z-index: 61;
+}
+
+@media (min-width: 500px) {
+    .qr-copy-btn {
+        font-size: 18px;
+    }
+}
+
+/* Overlay fade */
+#overlay-qrcode {
+    backdrop-filter: blur(4px);
+}
+
+/* Animations */
+@keyframes qrFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes qrPop {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .line-end {
     margin: 10vw 0;
 }
@@ -306,13 +465,13 @@ a {
 
 @media (min-aspect-ratio: 1/1) {
     .select {
-        margin-top: 30vw;
+        margin-top: 35vw;
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
     .select {
-        margin-top: 30vh;
+        margin-top: 35vh;
     }
 }
 
@@ -404,5 +563,12 @@ a {
         width: 6vw;
     }
 
-
+    .qr-card img {
+        width: 70vw;
+        max-width: 500px;
+        border-radius: 16px;
+        border: 6px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        animation: qrPop 0.4s ease;
+    }
 }

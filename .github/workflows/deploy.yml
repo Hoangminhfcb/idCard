@@ -1,0 +1,35 @@
+name: Build & Push Docker Image for Coolify
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Lấy code
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 2️⃣ Login Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3️⃣ Build & Push Docker image
+      - name: Build and Push Docker image
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
+          TAG=$(date +%Y%m%d%H%M%S)
+
+          docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:$TAG
+          docker push $IMAGE_NAME:latest
+
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV

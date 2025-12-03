@@ -18,6 +18,17 @@
 <body>
     <canvas id="canvas"></canvas>
     <section>
+        <div id="qrcode" class="qr-box">
+            <div id="overlay-qrcode"></div>
+
+            <div class="qr-card">
+                <img id="qrcode-img" src="assets/img/BIDV_1764119721130.jpg" alt="QR Code">
+
+                <button id="copy-number" onclick="copyNumber()" class="qr-copy-btn glow-on-hover">
+                    Sao chép số TK
+                </button>
+            </div>
+        </div>
         <div class="horizontal-scrolling-items">
             <div class="horizontal-scrolling-items__inner">
                 <div class="horizontal-scrolling-items__item">Hoàng</div>
@@ -34,7 +45,8 @@
         </div>
         <div id="top">
             <div id="topl">
-                <img id="avatar" src="assets/img/avatar1024x1024.png" alt="Xin Chào!">
+                <div id="overlay"></div>
+                <img id="avatar" src="assets/img/avatar1024x1024.png" alt="">
             </div>
             <div id="topr">
                 <div class="topr-col" id="name">
@@ -239,7 +251,7 @@
             </a>
             <div class="line"></div>
             <div class="head-line">THÔNG TIN THANH TOÁN</div>
-            <a class="link" onclick="copyNumber(this)">
+            <a class="link" onclick="displayQrCode()">
                 <div class="contact">
                     <div class="contactl">
                         <img src="assets/img/bidv152x152.png" alt="">
@@ -268,6 +280,20 @@
     <script defer src="assets/js/app.js" type="module"></script>
     <script src="assets/js/Notification.js"></script>
     <script>
+
+        const qrcode = document.getElementById("qrcode");
+        const overlayQr = document.getElementById("overlay-qrcode");
+
+        function displayQrCode() {
+            qrcode.classList.toggle("show");
+            overlayQr.classList.toggle("active");
+        }
+
+        qrcode.addEventListener("click", () => {
+            qrcode.classList.toggle("show");
+            overlayQr.classList.toggle("active");
+        });
+
         function copyNumber(event) {
             let numberElement = document.getElementById("number");
             let numberText = numberElement.textContent.trim();
@@ -281,6 +307,7 @@
                 });
             });
         }
+
         function notUse(element) {
             let titleElement = element.querySelector(".title");
             if (titleElement) {
@@ -289,6 +316,19 @@
                 });
             }
         }
+
+        const avatar = document.getElementById("avatar");
+        const overlay = document.getElementById("overlay")
+
+        avatar.addEventListener("click", () => {
+            avatar.classList.toggle("show");
+            overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", () => {
+            avatar.classList.toggle("show");
+            overlay.classList.toggle("active");
+        });
     </script>
 </body>
 
