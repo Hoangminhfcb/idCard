@@ -1,4 +1,4 @@
-name: Build & Deploy Docker Image
+name: Build & Push Docker Image for Coolify
 
 on:
   push:
@@ -20,7 +20,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & Push Docker image
+      # 3️⃣ Build & Push Docker image
+      - name: Build and Push Docker image
         run: |
           IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
           TAG=$(date +%Y%m%d%H%M%S)
@@ -29,3 +30,5 @@ jobs:
 
           docker push $IMAGE_NAME:$TAG
           docker push $IMAGE_NAME:latest
+
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
