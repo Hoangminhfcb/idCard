@@ -362,25 +362,91 @@ a {
     font-size: 5vw;
 }
 
-#qrcode {
-    top: 0;
-    left: 0;
-    margin: 0 auto;
-    padding-top: 13vh;
+.qr-box {
     position: sticky;
-    width: 90vw;
-    max-width: 500px;
+    top: 0;
+    width: 100%;
+    padding-top: 10vh;
     display: none;
-    flex-direction: column;
-    z-index: 25;
+    justify-content: center;
+    z-index: 50;
 }
 
-#qrcode.show {
+.qr-box.show {
     display: flex;
-
 }
 
-#copy-number {}
+/* Card container */
+.qr-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: qrFadeIn 0.35s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 60;
+}
+
+/* QR code image */
+.qr-card img {
+    width: 70vw;
+    max-width: 300px;
+    border-radius: 16px;
+    border: 6px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    animation: qrPop 0.4s ease;
+}
+
+/* Copy button */
+.qr-copy-btn {
+    margin-top: 18px;
+    width: 70vw;
+    max-width: 300px;
+    padding: 12px 0;
+    font-size: 4vw;
+    border-radius: 12px;
+    z-index: 61;
+}
+
+@media (min-width: 500px) {
+    .qr-copy-btn {
+        font-size: 18px;
+    }
+}
+
+/* Overlay fade */
+#overlay-qrcode {
+    backdrop-filter: blur(4px);
+}
+
+/* Animations */
+@keyframes qrFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes qrPop {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 
 .line-end {
     margin: 10vw 0;
@@ -497,7 +563,12 @@ a {
         width: 6vw;
     }
 
-    #qrcode {
-        padding-top: 15vw;
+    .qr-card img {
+        width: 70vw;
+        max-width: 500px;
+        border-radius: 16px;
+        border: 6px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        animation: qrPop 0.4s ease;
     }
 }
