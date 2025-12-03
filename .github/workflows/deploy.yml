@@ -1,4 +1,4 @@
-name: Deploy via Cloudflare Tunnel
+name: Build & Push Docker Image for Coolify
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,109 +22,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3️⃣ Build & Push image
+      # 3️⃣ Build & Push Docker image
       - name: Build and Push Docker image
         run: |
           IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
           TAG=$(date +%Y%m%d%H%M%S)
+
           docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:$TAG
           docker push $IMAGE_NAME:latest
+
           echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
-
-      # 4️⃣ Cài cloudflared và sshpass
-      - name: Install dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y sshpass
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-          sudo mv cloudflared /usr/local/bin/cloudflared
-          sudo chmod +x /usr/local/bin/cloudflared
-          cloudflared --version
-
-      # 5️⃣ Mở Cloudflare Tunnel (background) với service token
-      - name: Start Cloudflare Tunnel (background)
-        env:
-          CF_SERVICE_TOKEN_ID: ${{ secrets.CF_SERVICE_TOKEN_ID }}
-          CF_SERVICE_TOKEN_SECRET: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
-        run: |
-          echo "=== Starting authenticated tunnel with Service Token ==="
-
-          # Export biến theo đúng tên mà cloudflared hiểu
-          export CLOUDFLARE_ACCESS_CLIENT_ID="${CF_SERVICE_TOKEN_ID}"
-          export CLOUDFLARE_ACCESS_CLIENT_SECRET="${CF_SERVICE_TOKEN_SECRET}"
-
-          # Mở tunnel trên port 2222
-          nohup cloudflared access tcp \
-            --hostname ssh.zanis.id.vn \
-            --url localhost:2222 \
-            > cloudflared.log 2>&1 &
-
-          echo "Waiting for tunnel to establish..."
-          sleep 15
-
-          echo "--- Tunnel logs ---"
-          head -30 cloudflared.log || true
-
-          # Kiểm tra có lỗi xác thực không
-          if grep -q "browser window" cloudflared.log; then
-            echo "❌ ERROR: Cloudflare service token not applied properly!"
-            cat cloudflared.log
-            exit 1
-          fi
-
-          echo "--- Port check ---"
-          ss -ltn | grep 2222 || echo "⚠️ WARNING: Port 2222 not listening!"
-
-      # 6️⃣ Deploy qua SSH (via Cloudflare Tunnel)
-      - name: Deploy over SSH (via Tunnel)
-        env:
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
-        run: |
-          echo "=== Deploying via SSH through Cloudflare Tunnel ==="
-
-          sshpass -e ssh -vvv \
-            -o ConnectTimeout=30 \
-            -o PubkeyAuthentication=no \
-            -o PreferredAuthentications=password \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            -p 2222 \
-            ${{ secrets.SSH_USER }}@127.0.0.1 << 'ENDSSH'
-          set -e
-
-          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/zanis-e-card
-          IMAGE_TAG=${{ env.IMAGE_TAG }}
-
-          echo "=== Deploying image: $IMAGE_NAME:$IMAGE_TAG ==="
-
-          echo "Dừng container cũ (nếu có)..."
-          docker stop e-card || true
-          docker rm e-card || true
-
-          echo "Xóa image cũ..."
-          docker image prune -af
-
-          echo "Pull image mới: $IMAGE_NAME:$IMAGE_TAG"
-          docker pull $IMAGE_NAME:$IMAGE_TAG
-
-          echo "Chạy container mới..."
-          docker run -d \
-            --name e-card \
-            -p 80:8080 \
-            --restart unless-stopped \
-            $IMAGE_NAME:$IMAGE_TAG
-
-          echo "=== Deploy thành công! ==="
-          docker ps | grep e-card
-
-      # 7️⃣ Show logs nếu có lỗi
-      - name: Show logs on failure
-        if: failure()
-        run: |
-          echo "=== FULL CLOUDFLARED LOGS ==="
-          cat cloudflared.log || echo "No cloudflared log found"
-
-          echo ""
-          echo "=== NETWORK STATUS ==="
-          ss -ltn
